@@ -41,6 +41,9 @@ const userSchema = new Schema({
     maxLength: 11,
 
   },
+  Post : {
+    type : Array,
+  }
   
  
 });

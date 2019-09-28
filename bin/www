@@ -8,6 +8,12 @@ var app = require('../app');
 var debug = require('debug')('server:server');
 var http = require('http');
 
+/*
+models to be used 
+ */
+require('../Models/Models');
+require('../Models/User');
+
 /**
  * Get port from environment and store in Express.
  */
