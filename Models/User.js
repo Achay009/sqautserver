@@ -40,10 +40,8 @@ const userSchema = new Schema({
     minLength: 11,
     maxLength: 11,
 
-  },
-  Post : {
-    type : Array,
   }
+
   
  
 });
@@ -79,7 +77,7 @@ userSchema.pre('save', function(next) {
 userSchema.statics.findByCredentials = async (email, password) => {
     // Search for a user by email and password.
     const user = await User.findOne({Email : email} )
-    console.log(user);
+    
    
     if (!user) {
         throw new Error({ error: 'Invalid login credentials' })

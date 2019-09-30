@@ -1,4 +1,8 @@
 const User = require('../../Models/User')
+const Model = require('../../Models/Models');
+const Post =  Model.Post;
+const Transaction = Model.Transaction;
+const Image = Model.Image;
 
 
 module.exports = {
@@ -6,6 +10,8 @@ module.exports = {
         
        try{
         var user = await User.findById(req.user.user);
+        var post = await Post.find();
+        
 
         if(!user){
             return res.status(204).json({
@@ -15,6 +21,7 @@ module.exports = {
         }
         return res.status(200).json({
             data : user,
+            post : post,
             message : 'Inside UserController'
         })
        }catch(error){
@@ -24,5 +31,9 @@ module.exports = {
             message : 'Internal Server Error Idiot'
         })
        }
+
+
+
+
     }
 }
