@@ -14,7 +14,7 @@ module.exports = function(req,res,next){
             if(err){
                 res.status(401).json({
                     data : {},
-                    message : err.message
+                    message : 'session expired'
                 })
             }
 
@@ -24,6 +24,7 @@ module.exports = function(req,res,next){
                     message : 'No Content'
                 })
             }
+
 
             req.user = data;
             next();

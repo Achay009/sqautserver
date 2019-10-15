@@ -40,6 +40,9 @@ const userSchema = new Schema({
     minLength: 11,
     maxLength: 11,
 
+  },
+  IsAdmin : {
+    type : Boolean
   }
 
   
@@ -76,8 +79,8 @@ userSchema.pre('save', function(next) {
 
 userSchema.statics.findByCredentials = async (email, password) => {
     // Search for a user by email and password.
-    const user = await User.findOne({Email : email} )
-    
+    const user = await User.findOne({Email : email})
+     console.log(user);
    
     if (!user) {
         throw new Error({ error: 'Invalid login credentials' })
@@ -90,6 +93,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
     return user;
 }
+
     userSchema.plugin(timeStamp);
     const User = mongoose.model('User', userSchema);
    

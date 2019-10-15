@@ -14,6 +14,7 @@ module.exports = {
             Password : req.body.password,
             PhoneNumber : req.body.phonenumber
         }
+        //Going To Ad JOI Validator over here
         // if(!validate.registerValidation(registerUser)){
         //     return res.json({
         //         data :  {},
@@ -50,7 +51,6 @@ module.exports = {
                 message : 'User Created Succesfully'
             })
         }catch(error){
-            console.log(error)
             return res.status(500).json({
                 data : {},
                 message : 'internal Server Error'
@@ -72,15 +72,16 @@ module.exports = {
 
       var userEmail = req.body.email;
       var userPassword = req.body.password;
-     
-
       try{
+          
         let validatedUser = await User.findByCredentials(userEmail,userPassword);
+
+       
         
+       
         if(validatedUser){
             //generate Tokens Here
             let generateToken =  token(validatedUser);
-           
            
             return res.status(200).header('auth-token',generateToken).json({
                 data : validatedUser,
@@ -94,7 +95,7 @@ module.exports = {
               return res.status(401).json({
                 data : {},
                 token : null,
-                message : 'Invalid Login'
+                message : 'Invalid Login Details'
             })
           }
 

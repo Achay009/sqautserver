@@ -2,18 +2,18 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const timeStamp = require('../helpers/timeStampPlugin');
 
-const LISTTYPE = Object.freeze({
-   ROOM: 'Room',
-   SHARED_ROOM : 'Shared Room',
-   SHARED_APARTMENT : 'Shared Apartment',
-})
+// const LISTTYPE = Object.freeze({
+//    ROOM: 'Room',
+//    SHARED_ROOM : 'Shared Room',
+//    SHARED_APARTMENT : 'Shared Apartment',
+// })
 
 
-const STATUS = Object.freeze({
-   PENDINIG: 'Pending',
-   SUCCESS : 'Success',
-   DECLINED : 'Declined',
-})
+// const STATUS = Object.freeze({
+//    PENDINIG: 'Pending',
+//    SUCCESS : 'Success',
+//    DECLINED : 'Declined',
+// })
 
 
 
@@ -24,12 +24,12 @@ var postSchema = new Schema({
    },
    AccomodationType : {
       type: String,
-      enum: Object.values(LISTTYPE) 
+      // enum: Object.values(LISTTYPE) 
    },
    School : {
       type : String
    },
-   User : {
+   Host : {
       type : Schema.Types.ObjectId,
       ref : 'User'
    },
@@ -42,6 +42,10 @@ var postSchema = new Schema({
       minlength : 4,
 
    },
+   Status : {
+      type : String,
+      // enum : Object.values(STATUS)
+   }
   
     
 
@@ -61,7 +65,7 @@ var transactionlogSchema = new Schema({
    },
    Status : {
       type : String,
-      enum : Object.values(STATUS)
+      // enum : Object.values(STATUS)
    },
    Amount : {
       type : Number,
@@ -82,15 +86,48 @@ var imagelogSchema = new Schema({
    Image : {
       type : String,
       trim: true
+   },
+   Post : {
+      type : Schema.Types.ObjectId,
+      ref : 'Post'
    }
+
+})
+
+
+var bidSchema = new Schema({
+   PostId : {
+      type : Schema.Types.ObjectId,
+      ref : 'Post'
+   },
+   Host : {
+      type : Schema.Types.ObjectId,
+      ref : 'User'
+   },
+   Guest : {
+      type : Schema.Types.ObjectId,
+      ref : 'User'
+   },
+   Status : {
+      type : String,
+      // enum : Object.values(STATUS)
+   },
+   Amount : {
+      type : Number,
+      minlength : 4
+   },
+   BidAmount : {
+      type : Number,
+      minlength : 4
+   }
+
 
 })
 
 
 
 
-
-
+bidSchema.plugin(timeStamp);
 postSchema.plugin(timeStamp);
 transactionlogSchema.plugin(timeStamp);
 imagelogSchema.plugin(timeStamp);
@@ -98,9 +135,11 @@ imagelogSchema.plugin(timeStamp);
 const Post = mongoose.model('Post',postSchema);
 const Transaction = mongoose.model('Transaction',transactionlogSchema);
 const Image = mongoose.model('Image',imagelogSchema);
+const Bid = mongoose.model('Bid',bidSchema);
 module.exports = {
    Post : Post,
    Image : Image,
-   Transaction : Transaction
+   Transaction : Transaction,
+   Bid : Bid
 }
 
